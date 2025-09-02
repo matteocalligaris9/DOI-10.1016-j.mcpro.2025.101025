@@ -1,5 +1,7 @@
 #Code to generate Heatmap and PCA from the proteomic dataset
 
+# Load necessary package
+library(pheatmap)
 library(tidyr)
 library(dplyr)
 library(stringr)
@@ -53,17 +55,7 @@ normalized_data <- as.data.frame(lapply(AI_table, function(col) normalize_column
 write.csv(normalized_data, "normalized_sig_proteins.csv")
 
 
-#Subset the database according to the proteins obtained from XGBoost
-
-genes_of_interest = c("YWHAZ", "YWHAE", "GMFB",  "YWHAG",  "LCAT", "APLP1", 
-                      "ADAM23", "MAN2A1", "SHISA7", "CBLN1", "DKK3", "ECM1",  
-                      "SPOCK3", "PROCR")
-
-normalized_data<-normalized_data[,names(normalized_data) %in% c(genes_of_interest, "Condition")]
-
-# Load necessary package
-library(pheatmap)
-
+                              
 rownames(normalized_data) <- normalized_data$Sample 
 
 # Extract numeric data (assuming columns 3 onward contain protein data)
